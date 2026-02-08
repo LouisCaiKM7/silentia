@@ -50,8 +50,10 @@ const modeEmissiveIntensity: Record<ModeKey, number> = {
   soothe: 1.8,
 };
 
+const BASE_PATH = process.env.NODE_ENV === "production" ? "/silentia" : "";
+
 function Model({ mode }: { mode: ModeKey }) {
-  const { scene } = useGLTF("/model/model_sep.gltf");
+  const { scene } = useGLTF(`${BASE_PATH}/model/model_sep.gltf`);
   const targetColor = useRef(new THREE.Color(modeColors.off));
   const currentColor = useRef(new THREE.Color(modeColors.off));
   const materialsRef = useRef<THREE.MeshStandardMaterial[]>([]);
