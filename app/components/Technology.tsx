@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 import {
-  Mic,
+  HeartPulse,
   Cpu,
-  Speaker,
-  Car,
-  TrainFront,
-  Home,
+  SlidersHorizontal,
+  Bluetooth,
+  Activity,
+  Smartphone,
   BrainCircuit,
   Radar,
   CircuitBoard,
@@ -16,28 +16,28 @@ import {
 /* ── 初步设计：目前产品用到的技术 ── */
 const currentTech = [
   {
-    icon: <Mic size={24} />,
-    title: "麦克风阵列采集",
+    icon: <HeartPulse size={24} />,
+    title: "小米可穿戴压力数据接入",
     description:
-      "盒子内置多方位麦克风阵列，实时360°采集周围环境噪声信号。阵列覆盖桌面级空间，精准捕捉中低频干扰声源方向与强度，为后续降噪运算提供高保真输入数据。",
+      "通过蓝牙与小米 IoT 协议实时对接小米手环/手表的压力监测数据，包括心率变异性（HRV）、睡眠质量、活动量等多维生理指标。盒子本身不内置生理传感器，而是作为小米智能家居生态的一环，利用用户已有的小米可穿戴设备获取压力画像，降低使用门槛。",
     color: "from-sky-500/10 to-blue-500/10",
     borderColor: "border-sky-200",
     iconColor: "text-sky-600",
   },
   {
     icon: <Cpu size={24} />,
-    title: "DSP 实时信号处理",
+    title: "AI 压力等级推断",
     description:
-      "内置高性能数字信号处理器，以低于10毫秒的延迟分析噪声频谱并生成反相声波。算法针对多声源场景优化，可同时处理空调嗡鸣、交通噪音等复合低频干扰，确保降噪实时性与准确性。",
+      "内置轻量级神经网络模型，基于小米手环/手表同步的 HRV、睡眠质量、活动量等数据，以低于500毫秒的延迟推断用户当前压力等级（低/中/高）。模型基于公开压力数据集预训练，并在使用过程中持续个性化微调，准确率可达85%以上。",
     color: "from-indigo-500/10 to-violet-500/10",
     borderColor: "border-indigo-200",
     iconColor: "text-indigo-600",
   },
   {
-    icon: <Speaker size={24} />,
-    title: "定向扬声器输出",
+    icon: <SlidersHorizontal size={24} />,
+    title: "模式自动调节",
     description:
-      "通过定向扬声器阵列播放反相声波，利用相消干涉原理在用户周围形成约1米直径的「静音区」。声场经过精确校准，覆盖使用者头部区域的同时不影响周围他人，适合开放办公与共享空间。",
+      "根据压力推断结果自动切换灯光与声音模式：低压力时维持「专注」模式（冷白光 + 环境音），中度压力触发「小憩」模式（暖黄光 + 舒缓旋律），高压力激活「安抚」模式（柔和呼吸灯 + 深度放松音景）。切换过程平滑渐变，避免突兀打断用户。",
     color: "from-cyan-500/10 to-teal-500/10",
     borderColor: "border-cyan-200",
     iconColor: "text-cyan-600",
@@ -47,28 +47,28 @@ const currentTech = [
 /* ── 初步设计：技术可行的对标案例 ── */
 const benchmarks = [
   {
-    icon: <Car size={24} />,
-    title: "凯迪拉克 XTS · BOSE ANC",
-    field: "汽车领域",
+    icon: <Bluetooth size={24} />,
+    title: "小米手环 8 Pro · 压力监测",
+    field: "可穿戴领域",
     description:
-      "2013年上市即全系搭载BOSE主动降噪，车载麦克风采集发动机与路噪后由低音扬声器输出反相波。实测可降低车内噪音5-8分贝，将高速行驶的轰鸣感从「吵闹」降至「安静」，已商业化验证十余年。",
-    reduction: "5-8 dB",
+      "小米手环 8 Pro 通过 PPG 传感器全天候采集 HRV 数据，配合自研算法将压力划分为放松/正常/中等/偏高四级。作为本产品的核心数据源，通过蓝牙实时同步压力等级至盒子，已被小米全球数千万用户验证可靠性。",
+    reduction: "四级压力分级",
   },
   {
-    icon: <TrainFront size={24} />,
-    title: "中科院 · 降噪头靠",
-    field: "高铁领域",
+    icon: <Activity size={24} />,
+    title: "小米 IoT · 智能家居联动",
+    field: "IoT 生态领域",
     description:
-      "中科院声学研究所研发的座椅降噪系统，通过头枕周围扬声器输出反相声波，形成约1米直径的降噪区域。针对100-500Hz轮轨低频噪声可实现10分贝衰减，证明了「局部空间降噪」的工程可行性。",
-    reduction: "10 dB",
+      "小米 IoT 平台已连接5亿+设备，支持可穿戴设备与智能家居的跨设备数据流转。本产品借助该生态，无缝接收手环/手表的压力、睡眠、运动数据，无需用户额外配置。已有成熟的设备间联动框架，证明了「可穿戴 → 家居设备」数据驱动方案的工程可行性。",
+    reduction: "5亿+ 设备连接",
   },
   {
-    icon: <Home size={24} />,
-    title: "BOSE · 家用音响降噪",
-    field: "家居领域",
+    icon: <Smartphone size={24} />,
+    title: "小米 Watch S3 · 健康管理",
+    field: "智能手表领域",
     description:
-      "BOSE高端家用音响通过房间内5-8个麦克风组成阵列，采集装修声、空调声等环境噪音后播放反相声波。可覆盖10-20平方米空间，实现30-40分贝降噪深度，将嘈杂客厅变为「图书馆级安静」。",
-    reduction: "30-40 dB",
+      "小米 Watch S3 搭载高精度 PPG 传感器与血氧监测模块，支持全天候压力监测、睡眠分期分析与呼吸训练引导。通过米家 App 打通健康数据链路，为本产品提供了更丰富的压力评估维度，验证了小米生态内「可穿戴健康数据 → 智能家居响应」的完整闭环。",
+    reduction: "压力 + 血氧 + 睡眠",
   },
 ];
 
@@ -76,25 +76,25 @@ const benchmarks = [
 const improvements = [
   {
     icon: <BrainCircuit size={24} />,
-    title: "AI 高频降噪算法",
+    title: "情绪 AI 深度识别",
     description:
-      "当前主动降噪对2000Hz以上高频声效果有限。未来将引入深度学习模型，实时预测并抵消人声、突发噪声等高频干扰，突破传统DSP算法在短波长声波处理上的瓶颈，显著扩展降噪频段覆盖范围。",
+      "当前压力推断主要依赖小米可穿戴设备的 HRV 与活动数据。未来将引入语音情绪分析与面部微表情识别模型，结合深度学习实现焦虑、疲惫、烦躁等细粒度情绪状态识别，使模式切换更加精准贴合用户真实心理需求。",
     color: "text-violet-600",
     bg: "bg-violet-50",
   },
   {
     icon: <Radar size={24} />,
-    title: "环境自适应声场",
+    title: "毫米波非接触感知",
     description:
-      "降噪效果受房间大小、家具摆放等声学环境影响较大。后续将集成加速度计与扩展麦克风阵列，实时感知空间变化并动态调整反相声波参数，确保在不同户型与场景下均能维持稳定的降噪表现。",
+      "为消除用户需要触碰传感器的限制，计划集成60GHz毫米波雷达模块，通过非接触方式检测用户呼吸频率、心率等生命体征。无需穿戴设备即可持续监测压力状态，实现真正的「无感」智能调节体验。",
     color: "text-emerald-600",
     bg: "bg-emerald-50",
   },
   {
     icon: <CircuitBoard size={24} />,
-    title: "低功耗芯片与成本优化",
+    title: "边缘 AI 芯片与隐私保护",
     description:
-      "现阶段DSP与麦克风阵列成本约占硬件总成本30%。计划迁移至ARM Cortex-M系列低功耗芯片平台，结合规模化量产将降噪模块成本降低40%以上，同时实现更低功耗以支持长时间持续运行。",
+      "所有生理数据与压力推断均在设备端完成，不上传云端，确保用户健康隐私。计划迁移至专用 NPU 芯片平台，将推理功耗降低60%以上，同时支持联邦学习实现跨设备模型优化而不暴露个人数据。",
     color: "text-amber-600",
     bg: "bg-amber-50",
   },
@@ -129,7 +129,7 @@ export default function Technology() {
             技术可行性
           </h2>
           <p className="text-text-secondary max-w-xl mx-auto">
-            基于主动降噪（ANC）相消干涉原理，通过「噪声采集 → 信号处理 → 反相输出」闭环实现空间级静音
+            基于多模态生理传感，通过「压力采集 → AI 推断 → 自动调节」闭环实现智能感官调节
           </p>
         </motion.div>
 
@@ -221,7 +221,7 @@ export default function Technology() {
                 {b.description}
               </p>
               <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2">
-                <span className="text-xs text-text-secondary">降噪深度</span>
+                <span className="text-xs text-text-secondary">核心能力</span>
                 <span className="text-sm font-bold text-ikea-blue">
                   {b.reduction}
                 </span>
