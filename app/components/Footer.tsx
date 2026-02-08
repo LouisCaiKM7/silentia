@@ -39,10 +39,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { label: "产品展示", href: "#product" },
-                { label: "使用场景", href: "#scenarios" },
-                { label: "用户画像", href: "#personas" },
-                { label: "财务概览", href: "#financials" },
-                { label: "公益计划", href: "#impact" },
+                { label: "使用场景", href: "#scenarios" }
               ].map((link) => (
                 <li key={link.href}>
                   <a
@@ -63,7 +60,7 @@ export default function Footer() {
             </h4>
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-xs text-white/60">
-                BPC Challenge 2025
+                BPC Challenge 2026
               </div>
               <p className="text-sm text-white/40">
                 本网站为演示用途，展示「静隙盒子」产品概念与商业计划。

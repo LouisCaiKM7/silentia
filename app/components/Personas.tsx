@@ -69,107 +69,108 @@ const cardVariants = {
 
 export default function Personas() {
   return (
-    <section id="personas" className="section-padding bg-background">
-      <div className="mx-auto max-w-6xl">
-        {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <span className="text-xs font-medium text-ikea-blue tracking-widest uppercase">
-            Target Users
-          </span>
-          <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
-            用户画像
-          </h2>
-          <p className="text-text-secondary max-w-lg mx-auto">
-            三类核心目标用户，覆盖都市白领、年轻家庭与学生群体
-          </p>
-        </motion.div>
+    // <section id="personas" className="section-padding bg-background">
+    //   <div className="mx-auto max-w-6xl">
+    //     {/* Section header */}
+    //     <motion.div
+    //       initial={{ opacity: 0, y: 30 }}
+    //       whileInView={{ opacity: 1, y: 0 }}
+    //       viewport={{ once: true, margin: "-100px" }}
+    //       transition={{ duration: 0.6 }}
+    //       className="text-center mb-16"
+    //     >
+    //       <span className="text-xs font-medium text-ikea-blue tracking-widest uppercase">
+    //         Target Users
+    //       </span>
+    //       <h2 className="text-3xl md:text-5xl font-bold mt-3 mb-4">
+    //         用户画像
+    //       </h2>
+    //       <p className="text-text-secondary max-w-lg mx-auto">
+    //         三类核心目标用户，覆盖都市白领、年轻家庭与学生群体
+    //       </p>
+    //     </motion.div>
 
-        {/* Persona cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
-        >
-          {personas.map((p) => (
-            <motion.div
-              key={p.name}
-              variants={cardVariants}
-              className={`card-hover bg-gradient-to-br ${p.gradient} rounded-3xl overflow-hidden border border-white`}
-            >
-              {/* Header */}
-              <div className="p-6 pb-4">
-                <div className="flex items-center gap-4 mb-4">
-                  <div
-                    className={`w-14 h-14 rounded-2xl ${p.color} flex items-center justify-center text-white shadow-lg`}
-                  >
-                    {p.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">{p.name}</h3>
-                    <p className="text-sm text-text-secondary">
-                      {p.age}岁 · {p.role}
-                    </p>
-                  </div>
-                </div>
+    //     {/* Persona cards */}
+    //     <motion.div
+    //       variants={containerVariants}
+    //       initial="hidden"
+    //       whileInView="visible"
+    //       viewport={{ once: true, margin: "-50px" }}
+    //       className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+    //     >
+    //       {personas.map((p) => (
+    //         <motion.div
+    //           key={p.name}
+    //           variants={cardVariants}
+    //           className={`card-hover bg-gradient-to-br ${p.gradient} rounded-3xl overflow-hidden border border-white`}
+    //         >
+    //           {/* Header */}
+    //           <div className="p-6 pb-4">
+    //             <div className="flex items-center gap-4 mb-4">
+    //               <div
+    //                 className={`w-14 h-14 rounded-2xl ${p.color} flex items-center justify-center text-white shadow-lg`}
+    //               >
+    //                 {p.icon}
+    //               </div>
+    //               <div>
+    //                 <h3 className="text-xl font-bold">{p.name}</h3>
+    //                 <p className="text-sm text-text-secondary">
+    //                   {p.age}岁 · {p.role}
+    //                 </p>
+    //               </div>
+    //             </div>
 
-                <div className="flex items-center gap-1.5 text-xs text-text-secondary mb-4">
-                  <MapPin size={12} />
-                  <span>{p.location}</span>
-                </div>
-              </div>
+    //             <div className="flex items-center gap-1.5 text-xs text-text-secondary mb-4">
+    //               <MapPin size={12} />
+    //               <span>{p.location}</span>
+    //             </div>
+    //           </div>
 
-              {/* Pain points */}
-              <div className="px-6 pb-4">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Target size={14} className="text-red-400" />
-                  <span className="text-xs font-semibold text-foreground/80">痛点</span>
-                </div>
-                <ul className="space-y-1.5">
-                  {p.painPoints.map((point) => (
-                    <li key={point} className="text-sm text-foreground/60 flex items-start gap-2">
-                      <span className="w-1 h-1 rounded-full bg-foreground/30 mt-2 shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+    //           {/* Pain points */}
+    //           <div className="px-6 pb-4">
+    //             <div className="flex items-center gap-1.5 mb-2">
+    //               <Target size={14} className="text-red-400" />
+    //               <span className="text-xs font-semibold text-foreground/80">痛点</span>
+    //             </div>
+    //             <ul className="space-y-1.5">
+    //               {p.painPoints.map((point) => (
+    //                 <li key={point} className="text-sm text-foreground/60 flex items-start gap-2">
+    //                   <span className="w-1 h-1 rounded-full bg-foreground/30 mt-2 shrink-0" />
+    //                   {point}
+    //                 </li>
+    //               ))}
+    //             </ul>
+    //           </div>
 
-              {/* Usage scenario */}
-              <div className="px-6 pb-4">
-                <div className="flex items-center gap-1.5 mb-2">
-                  <Zap size={14} className="text-amber-500" />
-                  <span className="text-xs font-semibold text-foreground/80">使用场景</span>
-                </div>
-                <p className="text-sm text-foreground/60 leading-relaxed">
-                  {p.scenario}
-                </p>
-              </div>
+    //           {/* Usage scenario */}
+    //           <div className="px-6 pb-4">
+    //             <div className="flex items-center gap-1.5 mb-2">
+    //               <Zap size={14} className="text-amber-500" />
+    //               <span className="text-xs font-semibold text-foreground/80">使用场景</span>
+    //             </div>
+    //             <p className="text-sm text-foreground/60 leading-relaxed">
+    //               {p.scenario}
+    //             </p>
+    //           </div>
 
-              {/* Channels */}
-              <div className="px-6 pb-6">
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {p.channels.map((ch) => (
-                    <span
-                      key={ch}
-                      className="text-xs px-2.5 py-1 rounded-full bg-white/70 text-foreground/60 border border-foreground/5"
-                    >
-                      {ch}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+    //           {/* Channels */}
+    //           <div className="px-6 pb-6">
+    //             <div className="flex flex-wrap gap-2 mt-2">
+    //               {p.channels.map((ch) => (
+    //                 <span
+    //                   key={ch}
+    //                   className="text-xs px-2.5 py-1 rounded-full bg-white/70 text-foreground/60 border border-foreground/5"
+    //                 >
+    //                   {ch}
+    //                 </span>
+    //               ))}
+    //             </div>
+    //           </div>
+    //         </motion.div>
+    //       ))}
+    //     </motion.div>
+    //   </div>
+    // </section>
+    <></>
   );
 }

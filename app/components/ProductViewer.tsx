@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useRef, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, ContactShadows } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { Lightbulb, Focus, Moon, Heart, AlertTriangle } from "lucide-react";
 import * as THREE from "three";
+import { useAmbientSound } from "./useAmbientSound";
 
 class ModelErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -43,20 +44,17 @@ const modeColors: Record<ModeKey, string> = {
   soothe: "#ff8c5a",
 };
 
-const modeEmissiveIntensity: Record<ModeKey, number> = {
+const modeLightIntensity: Record<ModeKey, number> = {
   off: 0,
-  focus: 1.5,
-  nap: 1.2,
-  soothe: 1.8,
+  focus: 200,
+  nap: 150,
+  soothe: 300,
 };
 
 const BASE_PATH = process.env.NODE_ENV === "production" ? "/silentia" : "";
 
-function Model({ mode }: { mode: ModeKey }) {
+function Model() {
   const { scene } = useGLTF(`${BASE_PATH}/model/model_sep.gltf`);
-  const targetColor = useRef(new THREE.Color(modeColors.off));
-  const currentColor = useRef(new THREE.Color(modeColors.off));
-  const materialsRef = useRef<THREE.MeshStandardMaterial[]>([]);
   const transformRef = useRef<{ s: number; pos: [number, number, number] } | null>(null);
 
   if (!transformRef.current) {
@@ -72,34 +70,9 @@ function Model({ mode }: { mode: ModeKey }) {
       s,
       pos: [-center.x * s, -center.y * s, -center.z * s],
     };
-
-    const mats: THREE.MeshStandardMaterial[] = [];
-    scene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        const arr = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-        arr.forEach((m) => {
-          if (m && (m as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
-            mats.push(m as THREE.MeshStandardMaterial);
-          }
-        });
-      }
-    });
-    materialsRef.current = mats;
   }
 
   const { s, pos } = transformRef.current;
-
-  useFrame(() => {
-    targetColor.current.set(modeColors[mode]);
-    currentColor.current.lerp(targetColor.current, 0.05);
-    const ti = modeEmissiveIntensity[mode];
-
-    materialsRef.current.forEach((mat) => {
-      mat.emissive.copy(currentColor.current);
-      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, ti, 0.05);
-    });
-  });
 
   return (
     <group scale={s} position={pos}>
@@ -109,24 +82,28 @@ function Model({ mode }: { mode: ModeKey }) {
 }
 
 function SceneSetup({ mode }: { mode: ModeKey }) {
+  const isActive = mode !== "off";
+
   return (
     <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 8, 5]} intensity={1} castShadow />
-      <directionalLight position={[-3, 4, -2]} intensity={0.3} />
+      <ambientLight intensity={isActive ? 0.2 : 0.05} />
+      <directionalLight position={[5, 8, 5]} intensity={isActive ? 0.4 : 0.1} castShadow />
+      <directionalLight position={[-3, 4, -2]} intensity={isActive ? 0.1 : 0.05} />
       <pointLight
-        position={[0, 3, 0]}
-        intensity={mode !== "off" ? 2.5 : 0}
+        position={[0, 0, 1.5]}
+        intensity={modeLightIntensity[mode]}
         color={modeColors[mode]}
+        distance={0}
+        decay={2}
       />
-      <Model mode={mode} />
+      <Model />
       <ContactShadows
         position={[0, -2, 0]}
         opacity={0.4}
         scale={12}
         blur={2.5}
       />
-      <Environment preset="apartment" />
+      <Environment preset="apartment" environmentIntensity={isActive ? 0.15 : 0.05} />
       <OrbitControls
         enablePan={false}
         enableZoom={true}
@@ -148,6 +125,7 @@ const modes: { key: ModeKey; label: string; sublabel: string; icon: React.ReactN
 
 export default function ProductViewer() {
   const [mode, setMode] = useState<ModeKey>("off");
+  useAmbientSound(mode);
 
   return (
     <section id="product" className="section-padding bg-background">

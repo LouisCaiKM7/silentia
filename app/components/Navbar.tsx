@@ -8,9 +8,6 @@ const navItems = [
   { label: "产品展示", href: "#product" },
   { label: "技术可行性", href: "#technology" },
   { label: "使用场景", href: "#scenarios" },
-  { label: "用户画像", href: "#personas" },
-  { label: "财务概览", href: "#financials" },
-  { label: "公益计划", href: "#impact" },
 ];
 
 export default function Navbar() {
